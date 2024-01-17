@@ -21,8 +21,10 @@ This website serves as a hub for showcasing my journey, research, and projects a
  git clone https://github.com/MuTecEn/website.git
 
 ## Contributions
+
 Contributions are welcome! Whether it's fixing a typo, suggesting improvements, or adding new content, feel free to open an issue or submit a pull request.
 
-
 ## License
+
 This project is licensed under the MIT License.
+
