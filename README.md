@@ -1,37 +1,32 @@
-## Welcome to GitHub Pages
+# Anna-Maria Christodoulou - Personal Website
 
-You can use the [editor on GitHub](https://github.com/MuTecEn/mutecen.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+Welcome to the repository for Anna-Maria Christodoulou's personal website, where music meets technology and artificial intelligence.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Overview
 
-### Markdown
+This website serves as a hub for showcasing Anna-Maria's journey, research, and projects at the intersection of music and technology. From academic pursuits to hands-on experimentation with creative applications of Music Information Retrieval (MIR), the site provides insights into her passion for combining music with high-tech.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Features
 
-```markdown
-Syntax highlighted code block
+- **About Me:** Learn more about Anna-Maria's background, education, and professional experience.
+- **Research Focus:** Explore her current Ph.D. research on Multimodal Music Information Retrieval using AI techniques.
+- **MUSAI Gr:** Discover the Greek MIR Society, spearheaded by Anna-Maria, with a mission to raise awareness of MIR in the Greek community.
+- **Projects:** Dive into her academic and personal projects, including live coding, language learning, and podcasting.
+- **Contact:** Find ways to connect, collaborate, or simply have a chat.
 
-# Header 1
-## Header 2
-### Header 3
+## Getting Started
 
-- Bulleted
-- List
+**Clone the Repository:**
+ ```bash
+ git clone https://github.com/MuTecEn/website.git
 
-1. Numbered
-2. List
+Contributions
+Contributions are welcome! Whether it's fixing a typo, suggesting improvements, or adding new content, feel free to open an issue or submit a pull request.
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/MuTecEn/mutecen.github.io/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Contact Information
+Anna-Maria Christodoulou:
+LinkedIn
+Twitter
+Email: a.m.christodoulou@imv.uio.no
+License
+This project is licensed under the MIT License.
