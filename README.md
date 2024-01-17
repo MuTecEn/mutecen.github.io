@@ -4,14 +4,14 @@ Welcome to the repository for my personal website.
 
 ## Overview
 
-This website serves as a hub for showcasing Anna-Maria's journey, research, and projects at the intersection of music and technology. From academic pursuits to hands-on experimentation with creative applications of Music Information Retrieval (MIR), the site provides insights into her passion for combining music with high-tech.
+This website serves as a hub for showcasing my journey, research, and projects at the intersection of music and technology. From academic pursuits to hands-on experimentation with creative applications of Music Information Retrieval (MIR), the site provides insights into my passion for combining music with high-tech.
 
 ## Features
 
-- **About Me:** Learn more about Anna-Maria's background, education, and professional experience.
-- **Research Focus:** Explore her current Ph.D. research on Multimodal Music Information Retrieval using AI techniques.
-- **MUSAI Gr:** Discover the Greek MIR Society, spearheaded by Anna-Maria, with a mission to raise awareness of MIR in the Greek community.
-- **Projects:** Dive into her academic and personal projects, including live coding, language learning, and podcasting.
+- **About Me:** Learn more about my background, education, and professional experience.
+- **Research Focus:** Explore my current Ph.D. research on Multimodal Music Information Retrieval using AI techniques.
+- **MUSAI Gr:** Discover the Greek MIR Society, created with a mission to raise awareness of MIR in the Greek community.
+- **Projects:** Dive into my academic and personal projects.
 - **Contact:** Find ways to connect, collaborate, or simply have a chat.
 
 ## Getting Started
