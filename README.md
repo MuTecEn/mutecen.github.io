@@ -17,8 +17,9 @@ This website serves as a hub for showcasing my journey, research, and projects a
 ## Getting Started
 
 **Clone the Repository:**
- ```bash
+```bash
  git clone https://github.com/MuTecEn/website.git
+ ```
 
 ## Contributions
 
