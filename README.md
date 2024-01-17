@@ -1,6 +1,6 @@
 # Anna-Maria Christodoulou - Personal Website
 
-Welcome to the repository for Anna-Maria Christodoulou's personal website, where music meets technology and artificial intelligence.
+Welcome to the repository for my personal website.
 
 ## Overview
 
