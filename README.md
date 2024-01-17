@@ -20,13 +20,9 @@ This website serves as a hub for showcasing my journey, research, and projects a
  ```bash
  git clone https://github.com/MuTecEn/website.git
 
-Contributions
+## Contributions
 Contributions are welcome! Whether it's fixing a typo, suggesting improvements, or adding new content, feel free to open an issue or submit a pull request.
 
-Contact Information
-Anna-Maria Christodoulou:
-LinkedIn
-Twitter
-Email: a.m.christodoulou@imv.uio.no
-License
+
+## License
 This project is licensed under the MIT License.
