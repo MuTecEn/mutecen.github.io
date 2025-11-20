@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Research Questions – Anna-Maria Christodoulou</title>
 
+  <!-- Thebe for interactive Python cells -->
+<script src="https://unpkg.com/thebe@latest/lib/index.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/thebe@latest/lib/thebe.css" />
+
   <style>
     body {
       font-family: "Trebuchet MS", sans-serif;
@@ -92,6 +96,26 @@
       font-size: 2rem;
       color: #005c7a;
     }
+
+    /* INTERACTIVE DESCRIPTION BOX */
+#info-box {
+display: none;
+margin-top: 20px;
+padding: 15px;
+border-radius: 10px;
+background: #ffffffcc;
+border: 2px solid #00789e;
+}
+
+
+/* INTERACTIVE CODE BLOCKS */
+.cell-block {
+background: #f4f4f4;
+padding: 15px;
+margin: 20px 0;
+border-radius: 8px;
+border: 1px solid #cccccc;
+}
 
   </style>
 </head>
@@ -227,4 +251,51 @@ Music Understanding is not one thing. But involves:
     <p>What is music information processing?</p>
     <p>Computational music information processing is about turning the physical experience of music into digital data, and then into forms of machine cognition, so that
       computers can help us explore, analyze, and understand music in new ways.</p>
+
+    <div class="cell-block thebe-cell" data-executable="true" data-language="python">
+<pre data-executable="true" data-language="python">
+metadata = {
+"tempo": 95,
+"key": "A minor",
+"instrumentation": ["violin", "laouto", "voice"],
+}
+
+
+question = "What is the key of the piece?"
+
+
+if "key" in question.lower():
+answer = metadata["key"]
+else:
+answer = "Not sure yet!"
+
+
+answer
+</pre>
+</div>
+
+
+</div>
+
+
+<script>
+function showInfo(text) {
+const box = document.getElementById("info-box");
+box.innerHTML = text;
+box.style.display = "block";
+}
+
+
+thebe.config = {
+useBinder: true,
+binderOptions: {
+repo: "binder-examples/jupyter-stacks-datascience",
+ref: "master",
+}
+};
+thebe.bootstrap();
+</script>
+</body>
+</html>
+    
 
