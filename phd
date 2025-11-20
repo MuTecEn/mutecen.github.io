@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Research Questions – Anna‑Maria Christodoulou</title>
+
+  <!-- Thebe: turns code cells into live Jupyter-backed cells -->
+  <script src="https://unpkg.com/thebe@latest/lib/index.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/thebe@latest/lib/thebe.css" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #9ee0f0;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      text-align: center;
+      padding: 20px;
+      background-color: #005c7a;
+      color: #fff;
+    }
+    nav {
+      background-color: #003d50;
+      text-align: center;
+      padding: 10px 0;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #ffffffcc;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .cell-block {
+      background: #f4f4f4;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 8px;
+      border: 1px solid #cccccc;
+    }
+    h2 {
+      color: #003d50;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Interactive Research Questions</h1>
+    <p>Explore my PhD project through live, interactive examples</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="research.html">Research</a>
+    <a href="musaigreece.html">MusAI Greece</a>
+  </nav>
+
+  <div class="container">
+    <h2>1. Example: A Simple Music‑QA Demo</h2>
+    <p>
+      This code cell shows how a basic question‑answering system over musical metadata
+      could work. You can edit the code or question and run it directly in your browser.
+    </p>
+
+    <div class="cell-block thebe-cell" data-executable="true" data-language="python">
+      <pre data-executable="true" data-language="python">
+# Simple Music-QA demo
+metadata = {
+    "tempo": 95,
+    "key": "A minor",
+    "instrumentation": ["violin", "laouto", "voice"],
+}
+
+question = "What is the key of the piece?"
+
+if "key" in question.lower():
+    answer = metadata["key"]
+else:
+    answer = "I don't know yet, but future models will!"
+
+answer
+      </pre>
+    </div>
+
+    <h2>2. Try Out a Gesture‑Audio Relationship Example</h2>
+    <p>
+      Modify the numbers to see how gesture amplitude could relate to dynamic level.
+      This is a toy example to illustrate multimodal reasoning.
+    </p>
+
+    <div class="cell-block thebe-cell" data-executable="true" data-language="python">
+      <pre data-executable="true" data-language="python">
+# Gesture–audio toy model
+import math
+
+gesture_amplitude = 0.6  # change this value (0–1)
+audio_dynamic = round(gesture_amplitude * 100)
+
+f"Estimated dynamic level: {audio_dynamic} (0–100 scale)"
+      </pre>
+    </div>
+
+    <h2>3. Explore Multimodal Inputs</h2>
+    <p>
+      This cell prints how a hypothetical system might select which modality to use
+      based on the question — inspired by Paper V.
+    </p>
+
+    <div class="cell-block thebe-cell" data-executable="true" data-language="python">
+      <pre data-executable="true" data-language="python">
+# Simple modality selector
+question = "How fast is the performer moving?"
+
+if "moving" in question.lower() or "gesture" in question.lower():
+    modality = "motion capture"
+elif "sound" in question.lower() or "loud" in question.lower():
+    modality = "audio"
+else:
+    modality = "text or metadata"
+
+f"Selected modality: {modality}"
+      </pre>
+    </div>
+  </div>
+
+  <script>
+    thebe.config = {
+      useBinder: true,
+      binderOptions: {
+        repo: "binder-examples/jupyter-stacks-datascience",
+        ref: "master",
+      },
+      codeMirrorConfig: {
+        theme: "default",
+      },
+    };
+    thebe.bootstrap();
+  </script>
+</body>
+</html>
