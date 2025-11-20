@@ -595,7 +595,13 @@ document.getElementById("taskToDataBtn").addEventListener("click", () => {
 <h2>Data Management Ethics & Compliance Test</h2>
 <p>This interactive test helps you assess whether your dataset management aligns with ethical and legal requirements.</p>
 
-<div class="cell-block" id="ethics-test"></div>
+<div class="cell-block" id="ethics-test">
+  <div id="current-question"></div>
+  <button id="yes-btn">Yes</button>
+  <button id="no-btn">No</button>
+  <p id="feedback" style="margin-top:10px; font-weight:bold;"></p>
+  <p id="ethics-score" style="margin-top:15px; font-weight:bold; font-size:1.1rem;"></p>
+</div>
 
 <script>
 // Define the decision tree
@@ -624,57 +630,67 @@ const ethicsFlow = {
   ]
 };
 
-// Render all questions
-const testContainer = document.getElementById("ethics-test");
 const phases = Object.keys(ethicsFlow);
+let currentPhase = 0;
+let currentQIndex = 0;
+let yesCount = 0;
+let noCount = 0;
 
-phases.forEach(phase => {
-  const phaseHeader = document.createElement("h3");
-  phaseHeader.textContent = phase;
-  testContainer.appendChild(phaseHeader);
+const questionEl = document.getElementById("current-question");
+const feedbackEl = document.getElementById("feedback");
+const scoreEl = document.getElementById("ethics-score");
+const yesBtn = document.getElementById("yes-btn");
+const noBtn = document.getElementById("no-btn");
 
-  ethicsFlow[phase].forEach((qObj, index) => {
-    const qDiv = document.createElement("div");
-    qDiv.className = "question-block";
-    qDiv.style.marginBottom = "15px";
+// Function to show current question
+function showQuestion() {
+  if (currentPhase >= phases.length) {
+    // End of test
+    const total = yesCount + noCount;
+    const percentage = ((yesCount / total) * 100).toFixed(0);
+    scoreEl.innerText = `📝 Ethics Score: ${yesCount} / ${total} ( ${percentage}% positive adherence )`;
+    questionEl.innerHTML = "<strong>All questions answered!</strong>";
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+    feedbackEl.innerText = "";
+    return;
+  }
 
-    const qText = document.createElement("p");
-    qText.innerHTML = `<strong>${qObj.q}</strong>`;
-    qDiv.appendChild(qText);
+  const phase = phases[currentPhase];
+  const qObj = ethicsFlow[phase][currentQIndex];
+  questionEl.innerHTML = `<strong>[${phase}]</strong> ${qObj.q}`;
+  feedbackEl.innerText = "";
+}
 
-    const yesBtn = document.createElement("button");
-    yesBtn.textContent = "Yes";
-    yesBtn.style.marginRight = "5px";
-
-    const noBtn = document.createElement("button");
-    noBtn.textContent = "No";
-
-    const msg = document.createElement("p");
-    msg.style.marginTop = "5px";
-    msg.style.fontWeight = "bold";
-
-    yesBtn.addEventListener("click", () => {
-      msg.innerText = "✅ Great!";
-      yesBtn.disabled = true;
-      noBtn.disabled = true;
-    });
-
-    noBtn.addEventListener("click", () => {
-      msg.innerText = qObj.riskNo;
-      yesBtn.disabled = true;
-      noBtn.disabled = true;
-    });
-
-    qDiv.appendChild(yesBtn);
-    qDiv.appendChild(noBtn);
-    qDiv.appendChild(msg);
-
-    testContainer.appendChild(qDiv);
-  });
+yesBtn.addEventListener("click", () => {
+  const phase = phases[currentPhase];
+  const qObj = ethicsFlow[phase][currentQIndex];
+  yesCount++;
+  feedbackEl.innerText = qObj.riskYes ? qObj.riskYes : "✅ Great!";
+  moveNext();
 });
+
+noBtn.addEventListener("click", () => {
+  const phase = phases[currentPhase];
+  const qObj = ethicsFlow[phase][currentQIndex];
+  noCount++;
+  feedbackEl.innerText = qObj.riskNo;
+  moveNext();
+});
+
+function moveNext() {
+  const phase = phases[currentPhase];
+  currentQIndex++;
+  if (currentQIndex >= ethicsFlow[phase].length) {
+    currentPhase++;
+    currentQIndex = 0;
+  }
+  setTimeout(showQuestion, 600); // small delay to let user read feedback
+}
+
+// Initialize first question
+showQuestion();
 </script>
-
-
 
 
 </div>  
