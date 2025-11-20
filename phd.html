@@ -428,6 +428,171 @@ thebe.config = {
 thebe.bootstrap();
 </script>
 
+  <h2>Multimodality Guide</h2>
+<p>This interactive tool helps you explore which music processing tasks you can perform with your dataset, or which data you need for a target task.</p>
+
+<!-- --- Panel: Data → Tasks --- -->
+<div class="cell-block">
+  <strong>Step 1 — I have this data:</strong><br>
+  <label><input type="checkbox" class="data-check" value="audio"> Audio</label><br>
+  <label><input type="checkbox" class="data-check" value="lyrics"> Lyrics/Text</label><br>
+  <label><input type="checkbox" class="data-check" value="midi"> MIDI/Symbolic Score</label><br>
+  <label><input type="checkbox" class="data-check" value="video"> Video</label><br>
+  <label><input type="checkbox" class="data-check" value="motion"> Motion Capture / IMU / EMG</label><br>
+  <label><input type="checkbox" class="data-check" value="physio"> Physiology (ECG, GSR...)</label><br>
+  <label><input type="checkbox" class="data-check" value="annotations"> Human Annotations</label><br>
+  <label><input type="checkbox" class="data-check" value="images"> Images (covers, etc.)</label><br>
+  <button id="dataToTaskBtn">Which tasks can I do?</button>
+  <p id="dataToTaskResult" style="font-weight:bold; margin-top:10px;"></p>
 </div>
+
+<!-- --- Panel: Task → Data --- -->
+<div class="cell-block">
+  <strong>Step 2 — I want to perform this task:</strong><br>
+  <select id="taskSelect2">
+    <option value="">-- Select a task --</option>
+    <option value="emotion">Emotion/Affect Recognition</option>
+    <option value="genre">Genre Classification / Auto-Tagging</option>
+    <option value="gesture">Musical Gesture Classification</option>
+    <option value="singing">Singing Voice Analysis</option>
+    <option value="source">Source Separation</option>
+    <option value="piano">Piano Tutoring</option>
+    <option value="segmentation">Music Segmentation / Structure Analysis</option>
+    <option value="transcription">Music Transcription</option>
+    <option value="instrument">Instrument Performance Analysis</option>
+    <option value="song">Song Retrieval</option>
+    <option value="explore">Music Exploration & Discovery</option>
+    <option value="generation">Music Generation</option>
+    <option value="multi">Multi-task MIR</option>
+  </select>
+  <button id="taskToDataBtn">Which data do I need?</button>
+  <p id="taskToDataResult" style="font-weight:bold; margin-top:10px;"></p>
+</div>
+
+<script>
+// --- Data → Tasks mapping
+const dataToTasksMap = {
+  audio: ["Emotion/Affect Recognition", "Genre Classification / Auto-Tagging", "Source Separation", "Piano Tutoring", "Music Segmentation / Structure Analysis", "Music Transcription", "Song Retrieval", "Music Exploration & Discovery", "Music Generation"],
+  lyrics: ["Emotion/Affect Recognition", "Genre Classification / Auto-Tagging", "Music Exploration & Discovery", "Music Generation"],
+  midi: ["Source Separation", "Piano Tutoring", "Music Segmentation / Structure Analysis", "Music Transcription"],
+  video: ["Musical Gesture Classification", "Singing Voice Analysis", "Music Generation", "Multi-task MIR"],
+  motion: ["Musical Gesture Classification", "Instrument Performance Analysis", "Multi-task MIR"],
+  physio: ["Emotion/Affect Recognition"],
+  annotations: ["Emotion/Affect Recognition", "Genre Classification / Auto-Tagging", "Musical Gesture Classification", "Singing Voice Analysis", "Source Separation", "Music Segmentation / Structure Analysis", "Music Transcription", "Instrument Performance Analysis", "Song Retrieval", "Music Exploration & Discovery", "Music Generation", "Multi-task MIR"],
+  images: ["Genre Classification / Auto-Tagging", "Music Generation"]
+};
+
+// --- Task → Data mapping with explanations
+const taskToDataMap = {
+  "emotion": {
+    audio: "Audio conveys acoustic cues of emotion.",
+    lyrics: "Lyrics add semantic context for emotion recognition.",
+    physio: "Physiological signals capture emotional responses.",
+    annotations: "Annotations provide ground truth for training."
+  },
+  "genre": {
+    audio: "Audio contains timbre, rhythm, and instrumentation information.",
+    lyrics: "Lyrics can indicate genre or style.",
+    images: "Album/cover images may provide genre clues.",
+    annotations: "Annotations give supervised labels."
+  },
+  "gesture": {
+    motion: "Motion capture or sensors provide performer movement data.",
+    video: "Video provides visual cues for gesture classification.",
+    audio: "Audio helps contextualize the gestures.",
+    annotations: "Human labels improve training and evaluation."
+  },
+  "singing": {
+    audio: "Audio provides vocal features such as pitch and timbre.",
+    video: "Video can support singer analysis.",
+    annotations: "Annotations give ground truth for singing traits."
+  },
+  "source": {
+    audio: "Audio contains the sounds to separate.",
+    midi: "MIDI provides note alignment to guide separation."
+  },
+  "piano": {
+    audio: "Audio captures performance nuances.",
+    midi: "MIDI gives symbolic representation of notes and timing."
+  },
+  "segmentation": {
+    audio: "Audio provides sound cues for segment boundaries.",
+    midi: "MIDI helps with timing and structure alignment."
+  },
+  "transcription": {
+    audio: "Audio is the main signal for transcription.",
+    midi: "MIDI gives symbolic reference for notes.",
+    video: "Video can supplement note timing in some datasets."
+  },
+  "instrument": {
+    audio: "Audio captures sonic nuances of performance.",
+    motion: "Motion shows finger or body movements.",
+    midi: "MIDI gives score information."
+  },
+  "song": {
+    audio: "Audio is used for similarity matching.",
+    lyrics: "Lyrics help for textual matching and search.",
+    annotations: "Annotations help label songs accurately."
+  },
+  "explore": {
+    audio: "Audio used in recommendation models.",
+    lyrics: "Lyrics add semantic meaning.",
+    annotations: "Annotations improve exploration metrics.",
+    images: "Images may support content-based recommendations."
+  },
+  "generation": {
+    audio: "Audio provides training material for generation.",
+    video: "Video adds visual cues for generated content.",
+    lyrics: "Text helps generate context-specific music."
+  },
+  "multi": {
+    audio: "Audio is a core modality.",
+    midi: "MIDI supports multiple tasks.",
+    video: "Video enriches multimodal learning.",
+    motion: "Motion data allows gesture-based tasks.",
+    lyrics: "Lyrics/text support semantic understanding.",
+    physio: "Physiology supports emotion tasks.",
+    annotations: "Annotations provide ground truth.",
+    images: "Images add additional context."
+  }
+};
+
+// --- Event handlers
+document.getElementById("dataToTaskBtn").addEventListener("click", () => {
+  const checked = [...document.querySelectorAll(".data-check:checked")].map(c => c.value);
+  if(checked.length === 0){
+    document.getElementById("dataToTaskResult").innerText = "Please select at least one data type.";
+    return;
+  }
+
+  let taskSet = new Set();
+  checked.forEach(d => {
+    if(dataToTasksMap[d]){
+      dataToTasksMap[d].forEach(t => taskSet.add(t));
+    }
+  });
+
+  const taskList = Array.from(taskSet).sort();
+  document.getElementById("dataToTaskResult").innerHTML = `<strong>Possible tasks:</strong><br>${taskList.join("<br>")}`;
+});
+
+document.getElementById("taskToDataBtn").addEventListener("click", () => {
+  const task = document.getElementById("taskSelect2").value;
+  if(!task){
+    document.getElementById("taskToDataResult").innerText = "Please select a task first.";
+    return;
+  }
+
+  const dataMap = taskToDataMap[task];
+  let html = "<strong>Recommended data for this task:</strong><br>";
+  for(const [d, expl] of Object.entries(dataMap)){
+    html += `<strong>${d.charAt(0).toUpperCase() + d.slice(1)}:</strong> ${expl}<br>`;
+  }
+  document.getElementById("taskToDataResult").innerHTML = html;
+});
+</script>
+
+
+</div>  
 </body>
 </html>
