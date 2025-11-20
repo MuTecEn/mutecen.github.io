@@ -592,7 +592,7 @@ document.getElementById("taskToDataBtn").addEventListener("click", () => {
 });
 </script>
 
-  <h2>Data Management Ethics & Compliance Test</h2>
+<h2>Data Management Ethics & Compliance Test</h2>
 <p>This interactive test helps you assess whether your dataset management aligns with ethical and legal requirements.</p>
 
 <div class="cell-block" id="ethics-test">
@@ -603,33 +603,33 @@ document.getElementById("taskToDataBtn").addEventListener("click", () => {
 </div>
 
 <script>
-// Define the decision tree
+// Decision tree
 const ethicsFlow = {
   "Preliminary Planning": [
-    { q: "Do you adhere to FAIR principles?", riskNo: "⚠️ Risk of data mismanagement" },
-    { q: "Do you have clear research goals?", riskNo: "⚠️ Risk of misaligned objectives" },
-    { q: "Is your data diverse?", riskNo: "⚠️ Risk of bias" }
+    { q: "Do you adhere to FAIR principles?", riskNo: "⚠️ Risk of data mismanagement", yesMsg: "✅ Adhering to FAIR principles supports good practices." },
+    { q: "Do you have clear research goals?", riskNo: "⚠️ Risk of misaligned objectives", yesMsg: "✅ Clear research goals help guide dataset design." },
+    { q: "Is your data diverse?", riskNo: "⚠️ Risk of bias", yesMsg: "✅ Diverse data improves generalizability and fairness." }
   ],
   "Dataset Construction": [
-    { q: "Are ethical storage options considered?", riskNo: "⚠️ Risk of data breach" },
-    { q: "Is the dataset structure cohesive?", riskNo: "⚠️ Risk of poor usability" },
-    { q: "Are multiple modalities integrated thoughtfully?", riskNo: "⚠️ Risk of missing insights" }
+    { q: "Are ethical storage options considered?", riskNo: "⚠️ Risk of data breach", yesMsg: "✅ Ethical storage protects participants' privacy." },
+    { q: "Is the dataset structure cohesive?", riskNo: "⚠️ Risk of poor usability", yesMsg: "✅ Cohesive structure makes data easier to work with." },
+    { q: "Are multiple modalities integrated thoughtfully?", riskNo: "⚠️ Risk of missing insights", yesMsg: "✅ Thoughtful modality integration improves analysis." }
   ],
   "Data Analysis": [
-    { q: "Is the dataset refined based on results?", riskNo: "⚠️ Risk of stagnation" },
-    { q: "Is documentation clear?", riskNo: "⚠️ Risk of confusion" },
-    { q: "Is analysis optimized for reproducibility?", riskNo: "⚠️ Risk of poor reproducibility" }
+    { q: "Is the dataset refined based on results?", riskNo: "⚠️ Risk of stagnation", yesMsg: "✅ Refining data ensures relevant outcomes." },
+    { q: "Is documentation clear?", riskNo: "⚠️ Risk of confusion", yesMsg: "✅ Clear documentation aids reproducibility." },
+    { q: "Is analysis optimized for reproducibility?", riskNo: "⚠️ Risk of poor reproducibility", yesMsg: "✅ Optimized analysis ensures reliable results." }
   ],
   "Publication": [
-    { q: "Are findings accurately interpreted?", riskNo: "⚠️ Risk of false conclusions" },
-    { q: "Is the report documented comprehensively?", riskNo: "⚠️ Risk of knowledge loss" }
+    { q: "Are findings accurately interpreted?", riskNo: "⚠️ Risk of false conclusions", yesMsg: "✅ Accurate interpretation ensures credibility." },
+    { q: "Is the report documented comprehensively?", riskNo: "⚠️ Risk of knowledge loss", yesMsg: "✅ Comprehensive reporting preserves knowledge." }
   ],
   "Archiving": [
-    { q: "Is the dataset accessible and reproducible?", riskNo: "⚠️ Risk of inaccessible/forgotten research", riskYes: "✅ Enduring impact!" }
+    { q: "Is the dataset accessible and reproducible?", riskNo: "⚠️ Risk of inaccessible/forgotten research", yesMsg: "✅ Enduring impact!" }
   ]
 };
 
-// Flatten flow for sequential navigation
+// Flatten flow
 const phases = Object.keys(ethicsFlow);
 let currentPhase = 0;
 let currentQIndex = 0;
@@ -640,48 +640,44 @@ const yesBtn = document.getElementById("yes-btn");
 const noBtn = document.getElementById("no-btn");
 
 function showQuestion() {
+  if(currentPhase >= phases.length){
+    questionEl.innerHTML = "<strong>All checks complete!</strong>";
+    resultEl.innerText = "";
+    yesBtn.disabled = true;
+    noBtn.disabled = true;
+    return;
+  }
   const phase = phases[currentPhase];
   const qObj = ethicsFlow[phase][currentQIndex];
   questionEl.innerHTML = `<strong>[${phase}]</strong> ${qObj.q}`;
   resultEl.innerText = "";
 }
 
-// Handle Yes click
+function nextQuestion() {
+  const phase = phases[currentPhase];
+  currentQIndex++;
+  if(currentQIndex >= ethicsFlow[phase].length){
+    currentPhase++;
+    currentQIndex = 0;
+  }
+  showQuestion();
+}
+
 yesBtn.addEventListener("click", () => {
   const phase = phases[currentPhase];
   const qObj = ethicsFlow[phase][currentQIndex];
-  
-  if (qObj.riskYes) {
-    resultEl.innerText = qObj.riskYes;
-    yesBtn.disabled = true;
-    noBtn.disabled = true;
-    return;
-  }
-
-  currentQIndex++;
-  if (currentQIndex >= ethicsFlow[phase].length) {
-    currentPhase++;
-    currentQIndex = 0;
-    if (currentPhase >= phases.length) {
-      resultEl.innerText = "✅ All checks complete!";
-      yesBtn.disabled = true;
-      noBtn.disabled = true;
-      return;
-    }
-  }
-  showQuestion();
+  resultEl.innerText = qObj.yesMsg || "✅ Good!";
+  nextQuestion();
 });
 
-// Handle No click
 noBtn.addEventListener("click", () => {
   const phase = phases[currentPhase];
   const qObj = ethicsFlow[phase][currentQIndex];
-  resultEl.innerText = qObj.riskNo;
-  yesBtn.disabled = true;
-  noBtn.disabled = true;
+  resultEl.innerText = qObj.riskNo || "⚠️ Warning!";
+  nextQuestion();
 });
 
-// Initialize first question
+// Start
 showQuestion();
 </script>
 
