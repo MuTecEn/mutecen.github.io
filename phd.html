@@ -3,35 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interactive Research Questions – Anna‑Maria Christodoulou</title>
-
-  <!-- Thebe: turns code cells into live Jupyter-backed cells -->
-  <script src="https://unpkg.com/thebe@latest/lib/index.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/thebe@latest/lib/thebe.css" />
+  <title>Research Questions – Anna-Maria Christodoulou</title>
 
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Trebuchet MS", sans-serif;
       background-color: #9ee0f0;
       margin: 0;
       padding: 0;
     }
     header {
       text-align: center;
-      padding: 20px;
+      padding: 25px;
       background-color: #005c7a;
       color: #fff;
     }
     nav {
       background-color: #003d50;
       text-align: center;
-      padding: 10px 0;
+      padding: 12px 0;
     }
     nav a {
       color: white;
       margin: 0 15px;
       text-decoration: none;
       font-size: 1.1rem;
+      font-weight: bold;
     }
     nav a:hover {
       text-decoration: underline;
@@ -39,27 +36,70 @@
     .container {
       max-width: 900px;
       margin: 30px auto;
-      background: #ffffffcc;
-      padding: 20px;
-      border-radius: 10px;
-    }
-    .cell-block {
-      background: #f4f4f4;
-      padding: 15px;
-      margin: 20px 0;
-      border-radius: 8px;
-      border: 1px solid #cccccc;
+      background: #ffffffdd;
+      padding: 25px;
+      border-radius: 12px;
     }
     h2 {
       color: #003d50;
     }
+    p {
+      line-height: 1.6;
+    }
+
+    /* --- PLAYFUL RESEARCH MAP --- */
+    .map-container {
+      margin-top: 35px;
+      padding: 20px;
+      background: #e7faff;
+      border-radius: 12px;
+      border: 2px dashed #00789e;
+    }
+    .map-title {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #005c7a;
+      font-weight: bold;
+    }
+    .map {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .map-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .bubble {
+      background: #fff;
+      border-radius: 20px;
+      padding: 15px 20px;
+      min-width: 180px;
+      text-align: center;
+      border: 3px solid #00a4c8;
+      font-weight: bold;
+      transition: transform 0.2s;
+    }
+    .bubble:hover {
+      transform: scale(1.06);
+      background: #dafeff;
+    }
+    .arrow {
+      text-align: center;
+      font-size: 2rem;
+      color: #005c7a;
+    }
+
   </style>
 </head>
 
 <body>
   <header>
-    <h1>Interactive Research Questions</h1>
-    <p>Explore my PhD project through live, interactive examples</p>
+    <h1>Research Questions</h1>
+    <p>A playful introduction to my PhD project</p>
   </header>
 
   <nav>
@@ -70,85 +110,91 @@
   </nav>
 
   <div class="container">
-    <h2>1. Example: A Simple Music‑QA Demo</h2>
+
+    <h2>What My PhD Is About</h2>
     <p>
-      This code cell shows how a basic question‑answering system over musical metadata
-      could work. You can edit the code or question and run it directly in your browser.
+      My PhD examines how computers can better understand music by looking at
+      more than just audio. Music also involves movement, text, visuals,
+      cultural cues, and the physical behavior of performers. When we combine
+      these sources — <strong>multimodality</strong> — we can model music in a
+      deeper and more human-like way.
     </p>
 
-    <div class="cell-block thebe-cell" data-executable="true" data-language="python">
-      <pre data-executable="true" data-language="python">
-# Simple Music-QA demo
-metadata = {
-    "tempo": 95,
-    "key": "A minor",
-    "instrumentation": ["violin", "laouto", "voice"],
-}
-
-question = "What is the key of the piece?"
-
-if "key" in question.lower():
-    answer = metadata["key"]
-else:
-    answer = "I don't know yet, but future models will!"
-
-answer
-      </pre>
-    </div>
-
-    <h2>2. Try Out a Gesture‑Audio Relationship Example</h2>
     <p>
-      Modify the numbers to see how gesture amplitude could relate to dynamic level.
-      This is a toy example to illustrate multimodal reasoning.
+      This page explains the main research questions in a simple and friendly way,
+      and gives you a visual “map” of how the ideas connect.
     </p>
 
-    <div class="cell-block thebe-cell" data-executable="true" data-language="python">
-      <pre data-executable="true" data-language="python">
-# Gesture–audio toy model
-import math
+    <!-- PLAYFUL GRAPHICAL MAP -->
+    <div class="map-container">
+      <div class="map-title">🌀 Multimodal Music Research Map</div>
+      <div class="map">
 
-gesture_amplitude = 0.6  # change this value (0–1)
-audio_dynamic = round(gesture_amplitude * 100)
+        <div class="map-row">
+          <div class="bubble">🎵 Music is Multimodal</div>
+          <div class="bubble">📊 We Use Data to Study Music</div>
+          <div class="bubble">🤖 Technology Supports Understanding</div>
+        </div>
 
-f"Estimated dynamic level: {audio_dynamic} (0–100 scale)"
-      </pre>
+        <div class="arrow">⬇️</div>
+
+        <div class="map-row">
+          <div class="bubble">🔍 RQ1: What Is Multimodality?</div>
+          <div class="bubble">🧠 RQ2: Can Tech Understand Context?</div>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div class="map-row">
+          <div class="bubble">📚 Definitions & Frameworks</div>
+          <div class="bubble">🎥 Audio-Video-Motion Datasets</div>
+          <div class="bubble">💬 Music Question Answering</div>
+          <div class="bubble">⚖️ Ethics & Data Management</div>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div class="map-row">
+          <div class="bubble" style="background:#c8ffe0;">✨ Better Understanding of Music</div>
+        </div>
+
+      </div>
     </div>
 
-    <h2>3. Explore Multimodal Inputs</h2>
+    <h2>Research Question 1</h2>
     <p>
-      This cell prints how a hypothetical system might select which modality to use
-      based on the question — inspired by Paper V.
+      <strong>How can multimodality be defined and used in computational music analysis?</strong>
+    </p>
+    <p>
+      Different fields talk about multimodality in different ways. In my PhD,
+      I propose a simple idea:
+      <em>use multiple data sources only when each one adds something new and meaningful to the task.</em>
+      This helps researchers choose the right combination of audio, video,
+      motion, text, and metadata — depending on what they want to understand.
     </p>
 
-    <div class="cell-block thebe-cell" data-executable="true" data-language="python">
-      <pre data-executable="true" data-language="python">
-# Simple modality selector
-question = "How fast is the performer moving?"
+    <h2>Research Question 2</h2>
+    <p>
+      <strong>How much can technology enhance the contextual understanding of music?</strong>
+    </p>
+    <p>
+      I worked with several multimodal datasets — folk music, classical music,
+      ensemble performance, motion capture, lyrics, and metadata — to see
+      whether machines can answer questions like:
+    </p>
+    <ul>
+      <li>What is happening in the performance?</li>
+      <li>Why is the performer moving this way?</li>
+      <li>How does culture shape the sound?</li>
+    </ul>
+    <p>
+      These questions require context, not just audio — and multimodality helps
+      bring that context into computational models.
+    </p>
 
-if "moving" in question.lower() or "gesture" in question.lower():
-    modality = "motion capture"
-elif "sound" in question.lower() or "loud" in question.lower():
-    modality = "audio"
-else:
-    modality = "text or metadata"
-
-f"Selected modality: {modality}"
-      </pre>
-    </div>
-  </div>
-
-  <script>
-    thebe.config = {
-      useBinder: true,
-      binderOptions: {
-        repo: "binder-examples/jupyter-stacks-datascience",
-        ref: "master",
-      },
-      codeMirrorConfig: {
-        theme: "default",
-      },
-    };
-    thebe.bootstrap();
-  </script>
-</body>
-</html>
+    <h2>In Summary</h2>
+    <p>
+      My PhD aims to:
+    </p>
+    <ul>
+      <li>create clearer multimodal terminology</li>
