@@ -235,20 +235,87 @@ border: 1px solid #cccccc;
       but they can still feel repetition, arrival, contrast, or surprise. They can follow a musical idea as it evolves, or sense the energy in a performer’s gesture. 
       Understanding music is less about naming things and more about experiencing how music flows and how it speaks.
 </p>
-Music Understanding is not one thing. But involves: 
-    ├─ Listening (not just hearing!)
-    │     └─ Attention + curiosity
-    ├─ Perception
-    │     └─ How we group, follow, and sense musical ideas
-    ├─ Cognition
-    │     └─ Memory, prediction, timing, reasoning
-    ├─ Embodiment
-    │     └─ How our body feels, moves, and simulates the music
-    ├─ Emotion & Experience
-    │     └─ What the music makes us feel and imagine
-    └─ Culture
-          └─ What our background teaches us to notice and value
-    <p>What is music information processing?</p>
+<div class="tree">
+  <ul>
+    <li>
+      <strong>Music Understanding</strong>
+      <ul>
+        <li>
+          <strong>Listening (not just hearing!)</strong>
+          <ul>
+            <li>Attention + curiosity</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Perception</strong>
+          <ul>
+            <li>How we group, follow, and sense musical ideas</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Cognition</strong>
+          <ul>
+            <li>Memory, prediction, timing, reasoning</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Embodiment</strong>
+          <ul>
+            <li>How our body feels, moves, and simulates the music</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Emotion &amp; Experience</strong>
+          <ul>
+            <li>What the music makes us feel and imagine</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Culture</strong>
+          <ul>
+            <li>What our background teaches us to notice and value</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<style>
+/* simple tree lines */
+.tree ul {
+  padding-left: 1.2rem;
+  position: relative;
+  list-style: none;
+  margin: 0;
+}
+.tree ul::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0.55rem;            /* adjust to align vertical line */
+  bottom: 0;
+  width: 1px;
+  background: #cfdbe0;      /* vertical connector color */
+}
+.tree li {
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+  position: relative;
+}
+.tree li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.9rem;              /* position horizontal connector */
+  width: 0.6rem;
+  height: 1px;
+  background: #cfdbe0;
+}
+.tree strong { color: #003d50; }
+.tree li ul::before { left: 0.35rem; } /* nested alignment */
+</style>
+    <p><strong>What is music information processing?</strong></p>
     <p>Computational music information processing is about turning the physical experience of music into digital data, and then into forms of machine cognition, so that
       computers can help us explore, analyze, and understand music in new ways.</p>
 
