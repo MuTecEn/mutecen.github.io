@@ -595,12 +595,7 @@ document.getElementById("taskToDataBtn").addEventListener("click", () => {
 <h2>Data Management Ethics & Compliance Test</h2>
 <p>This interactive test helps you assess whether your dataset management aligns with ethical and legal requirements.</p>
 
-<div class="cell-block" id="ethics-test">
-  <div id="ethics-question"></div>
-  <button id="yes-btn">Yes</button>
-  <button id="no-btn">No</button>
-  <p id="ethics-result" style="margin-top:10px; font-weight:bold;"></p>
-</div>
+<div class="cell-block" id="ethics-test"></div>
 
 <script>
 // Define the decision tree
@@ -629,80 +624,56 @@ const ethicsFlow = {
   ]
 };
 
-// Flatten flow for sequential navigation
+// Render all questions
+const testContainer = document.getElementById("ethics-test");
 const phases = Object.keys(ethicsFlow);
-let currentPhase = 0;
-let currentQIndex = 0;
 
-const questionEl = document.getElementById("ethics-question");
-const resultEl = document.getElementById("ethics-result");
-const yesBtn = document.getElementById("yes-btn");
-const noBtn = document.getElementById("no-btn");
+phases.forEach(phase => {
+  const phaseHeader = document.createElement("h3");
+  phaseHeader.textContent = phase;
+  testContainer.appendChild(phaseHeader);
 
-function showQuestion() {
-  const phase = phases[currentPhase];
-  const qObj = ethicsFlow[phase][currentQIndex];
-  questionEl.innerHTML = `<strong>[${phase}]</strong> ${qObj.q}`;
-  resultEl.innerText = "";
-}
+  ethicsFlow[phase].forEach((qObj, index) => {
+    const qDiv = document.createElement("div");
+    qDiv.className = "question-block";
+    qDiv.style.marginBottom = "15px";
 
-// Handle Yes click
-yesBtn.addEventListener("click", () => {
-  const phase = phases[currentPhase];
-  const qObj = ethicsFlow[phase][currentQIndex];
-  
-  if (qObj.riskYes) {
-    resultEl.innerText = qObj.riskYes;
-    yesBtn.disabled = true;
-    noBtn.disabled = true;
-    return;
-  }
+    const qText = document.createElement("p");
+    qText.innerHTML = `<strong>${qObj.q}</strong>`;
+    qDiv.appendChild(qText);
 
-  currentQIndex++;
-  if (currentQIndex >= ethicsFlow[phase].length) {
-    currentPhase++;
-    currentQIndex = 0;
-    if (currentPhase >= phases.length) {
-      resultEl.innerText = "✅ All checks complete!";
+    const yesBtn = document.createElement("button");
+    yesBtn.textContent = "Yes";
+    yesBtn.style.marginRight = "5px";
+
+    const noBtn = document.createElement("button");
+    noBtn.textContent = "No";
+
+    const msg = document.createElement("p");
+    msg.style.marginTop = "5px";
+    msg.style.fontWeight = "bold";
+
+    yesBtn.addEventListener("click", () => {
+      msg.innerText = "✅ Great!";
       yesBtn.disabled = true;
       noBtn.disabled = true;
-      return;
-    }
-  }
-  showQuestion();
-});
+    });
 
-// Handle No click
-noBtn.addEventListener("click", () => {
-  const phase = phases[currentPhase];
-  const qObj = ethicsFlow[phase][currentQIndex];
-
-  // Show the risk message
-  resultEl.innerText = qObj.riskNo;
-
-  // Move to next question after a short delay (e.g., 1.5 seconds)
-  setTimeout(() => {
-    currentQIndex++;
-    if (currentQIndex >= ethicsFlow[phase].length) {
-      currentPhase++;
-      currentQIndex = 0;
-    }
-    // If we've finished all phases
-    if (currentPhase >= phases.length) {
-      questionEl.innerHTML = "";
-      resultEl.innerText = "✅ All checks complete!";
+    noBtn.addEventListener("click", () => {
+      msg.innerText = qObj.riskNo;
       yesBtn.disabled = true;
       noBtn.disabled = true;
-      return;
-    }
-    showQuestion();
-  }, 1000); // delay so user can see the risk message
+    });
+
+    qDiv.appendChild(yesBtn);
+    qDiv.appendChild(noBtn);
+    qDiv.appendChild(msg);
+
+    testContainer.appendChild(qDiv);
+  });
 });
-
-
-// Initialize first question
-showQuestion();
 </script>
+
 
 
 
