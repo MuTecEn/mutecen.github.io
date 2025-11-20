@@ -363,266 +363,76 @@ ref: "master",
 thebe.bootstrap();
 </script>
 
-  <!-- MULTIMODALITY TEST -->
-<div class="test-container">
-  <h2>🧪 Is My Dataset Multimodal?</h2>
-  <p>Answer two quick questions to find out.</p>
+<p><strong>Is my dataset multimodal?</strong></p>
 
-  <!-- Question 1 -->
-  <div class="test-block">
-    <h3>1) What type of task are you performing?</h3>
+<p><em>Step 1 — What task are you performing?</em></p>
+<select id="taskSelect">
+  <option value="">-- Select a task --</option>
+  <optgroup label="Categorization-oriented">
+    <option>Emotion/Affect Recognition</option>
+    <option>Genre Classification</option>
+    <option>Auto-Tagging</option>
+    <option>Musical Gesture Classification</option>
+    <option>Singing Voice Analysis</option>
+  </optgroup>
+  <optgroup label="Time-dependent representation">
+    <option>Source Separation</option>
+    <option>Piano Tutoring</option>
+    <option>Music Segmentation</option>
+    <option>Music Structure Analysis</option>
+    <option>Music Transcription</option>
+    <option>Instrument Performance Analysis</option>
+  </optgroup>
+  <optgroup label="Music similarity-oriented">
+    <option>Song Retrieval</option>
+    <option>Music Exploration & Discovery</option>
+  </optgroup>
+  <optgroup label="Music Generation">
+    <option>Music Generation</option>
+  </optgroup>
+  <optgroup label="Multi-task">
+    <option>Multi-task MIR</option>
+  </optgroup>
+</select>
 
-    <div class="accordion">
+<p><em>Step 2 — What data does your dataset contain?</em></p>
 
-      <!-- 3.1 Categorization -->
-      <div class="acc-item">
-        <button class="acc-btn">3.1 Categorization-Oriented</button>
-        <div class="acc-content">
-          <div class="task-option" data-task="Emotion / Affect Recognition">Emotion / Affect Recognition</div>
-          <div class="task-option" data-task="Genre Classification">Genre Classification</div>
-          <div class="task-option" data-task="Auto-Tagging">Auto-Tagging</div>
-          <div class="task-option" data-task="Musical Gesture Classification">Musical Gesture Classification</div>
-          <div class="task-option" data-task="Singing Voice Analysis">Singing Voice Analysis</div>
-        </div>
-      </div>
+<label><input type="checkbox" class="modality" value="audio"> Audio</label><br>
+<label><input type="checkbox" class="modality" value="lyrics"> Lyrics/Text</label><br>
+<label><input type="checkbox" class="modality" value="midi"> MIDI/Symbolic Score</label><br>
+<label><input type="checkbox" class="modality" value="video"> Video</label><br>
+<label><input type="checkbox" class="modality" value="motion"> Motion Capture / IMU / EMG</label><br>
+<label><input type="checkbox" class="modality" value="physio"> Physiology (ECG, GSR...)</label><br>
+<label><input type="checkbox" class="modality" value="annotations"> Human Annotations</label><br>
+<label><input type="checkbox" class="modality" value="images"> Images (covers, etc.)</label><br>
 
-      <!-- 3.2 Time-dependent -->
-      <div class="acc-item">
-        <button class="acc-btn">3.2 Time-Dependent Representation-Oriented</button>
-        <div class="acc-content">
-          <div class="task-option" data-task="Source Separation">Source Separation</div>
-          <div class="task-option" data-task="Piano Tutoring">Piano Tutoring</div>
-          <div class="task-option" data-task="Music Segmentation">Music Segmentation</div>
-          <div class="task-option" data-task="Music Structure Analysis">Music Structure Analysis</div>
-          <div class="task-option" data-task="Music Transcription">Music Transcription</div>
-          <div class="task-option" data-task="Instrument Performance Analysis">Instrument Performance Analysis</div>
-        </div>
-      </div>
+<button id="checkButton">Check</button>
 
-      <!-- 3.3 Similarity -->
-      <div class="acc-item">
-        <button class="acc-btn">3.3 Music Similarity-Oriented</button>
-        <div class="acc-content">
-          <div class="task-option" data-task="Song Retrieval">Song Retrieval</div>
-          <div class="task-option" data-task="Music Exploration & Discovery">Music Exploration & Discovery</div>
-        </div>
-      </div>
-
-      <!-- 3.4 Generation -->
-      <div class="acc-item">
-        <button class="acc-btn">3.4 Music Generation</button>
-        <div class="acc-content">
-          <div class="task-option" data-task="Music Generation">Music Generation</div>
-        </div>
-      </div>
-
-      <!-- 3.5 Multi-Task -->
-      <div class="acc-item">
-        <button class="acc-btn">3.5 Multi-Task Datasets</button>
-        <div class="acc-content">
-          <div class="task-option" data-task="Multi-Task / Foundational Models">Multi-Task / Foundational Models</div>
-          <div class="task-option" data-task="Music Captioning">Music Captioning</div>
-          <div class="task-option" data-task="Music-Language Retrieval">Music-Language Retrieval</div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Selected task display -->
-    <p id="selectedTask" class="selected-display">Selected task: <em>none yet</em></p>
-  </div>
-
-  <!-- Question 2 -->
-  <div class="test-block">
-    <h3>2) What kinds of data exist in your dataset?</h3>
-    <p>Select all that apply:</p>
-
-    <div class="data-options">
-      <button class="data-btn" data-type="Audio">Audio</button>
-      <button class="data-btn" data-type="Video">Video</button>
-      <button class="data-btn" data-type="Motion">Motion / MoCap</button>
-      <button class="data-btn" data-type="Text">Text / Lyrics</button>
-      <button class="data-btn" data-type="Score">Score / Notation</button>
-      <button class="data-btn" data-type="MIDI">MIDI</button>
-      <button class="data-btn" data-type="Metadata">Metadata</button>
-      <button class="data-btn" data-type="Image">Images</button>
-      <button class="data-btn" data-type="Sensor">Physiological Data (EMG/ECG/IMU)</button>
-      <button class="data-btn" data-type="Other">Other</button>
-    </div>
-  </div>
-
-  <!-- Button -->
-  <div class="center">
-    <button id="evaluateBtn" class="evaluate-btn">Evaluate</button>
-  </div>
-
-  <!-- Result -->
-  <div id="resultBox" class="result-box hidden"></div>
-</div>
-
-<style>
-/* -- SAME styles as before, with additions -- */
-
-.test-container {
-  margin-top: 40px;
-  padding: 20px;
-  background: #e7faff;
-  border-radius: 12px;
-  border: 2px dashed #00789e;
-}
-
-.test-block { margin-bottom: 25px; }
-
-/* Accordion */
-.accordion { width: 100%; }
-
-.acc-btn {
-  width: 100%;
-  background: #005c7a;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  text-align: left;
-  cursor: pointer;
-  margin-bottom: 5px;
-}
-
-.acc-btn:hover {
-  background: #00789e;
-}
-
-.acc-content {
-  display: none;
-  padding: 10px;
-  background: #ffffff;
-  border-left: 3px solid #00789e;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.task-option {
-  padding: 8px;
-  cursor: pointer;
-  border-radius: 6px;
-  margin: 4px 0;
-  transition: 0.2s;
-}
-
-.task-option:hover { background: #dafeff; }
-
-.task-option.selected {
-  background: #00a4c8;
-  color: white;
-}
-
-.selected-display {
-  margin-top: 10px;
-  font-style: italic;
-}
-
-/* Data buttons (unchanged) */
-.data-options { display: flex; flex-wrap: wrap; gap: 10px; }
-.data-btn {
-  padding: 8px 14px;
-  border: 2px solid #00a4c8;
-  border-radius: 20px;
-  background: #fff;
-  cursor: pointer;
-  transition: 0.2s;
-  font-weight: bold;
-}
-.data-btn:hover { background: #dafeff; transform: scale(1.05); }
-.data-btn.selected { background: #00a4c8; color: white; transform: scale(1.05); }
-
-/* Evaluate button */
-.evaluate-btn {
-  padding: 12px 20px;
-  background: #005c7a;
-  color: white;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-}
-.evaluate-btn:hover { background: #00789e; }
-
-.result-box {
-  margin-top: 25px;
-  padding: 18px;
-  border-radius: 10px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-align: center;
-}
-.hidden { display: none; }
-
-.center { text-align: center; }
-</style>
+<p id="result" style="font-weight:bold; margin-top:10px;"></p>
 
 <script>
-// Accordion logic
-document.querySelectorAll(".acc-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const content = btn.nextElementSibling;
-    content.style.display = content.style.display === "block" ? "none" : "block";
-  });
-});
+document.getElementById("checkButton").addEventListener("click", function() {
+    const task = document.getElementById("taskSelect").value;
+    const checked = [...document.querySelectorAll(".modality:checked")];
 
-// Task selection logic
-let currentTask = "";
-document.querySelectorAll(".task-option").forEach(opt => {
-  opt.addEventListener("click", () => {
-    document.querySelectorAll(".task-option").forEach(o => o.classList.remove("selected"));
-    opt.classList.add("selected");
-    currentTask = opt.dataset.task;
-    document.getElementById("selectedTask").innerHTML =
-      "Selected task: <strong>" + currentTask + "</strong>";
-  });
-});
+    if (!task) {
+        document.getElementById("result").innerText = "Please choose a task first.";
+        return;
+    }
 
-// Data selection
-document.querySelectorAll(".data-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    btn.classList.toggle("selected");
-  });
-});
+    if (checked.length === 0) {
+        document.getElementById("result").innerText = "Please select at least one type of data.";
+        return;
+    }
 
-// Evaluation
-document.getElementById("evaluateBtn").addEventListener("click", () => {
-  const selectedData = [...document.querySelectorAll(".data-btn.selected")];
-  const resultBox = document.getElementById("resultBox");
-  resultBox.classList.remove("hidden");
-
-  if (!currentTask) {
-    resultBox.style.background = "#fff3cd";
-    resultBox.style.color = "#856404";
-    resultBox.textContent = "Please select a task first!";
-    return;
-  }
-
-  if (selectedData.length === 0) {
-    resultBox.style.background = "#fff3cd";
-    resultBox.style.color = "#856404";
-    resultBox.textContent = "Please select at least one data type.";
-    return;
-  }
-
-  if (selectedData.length > 1) {
-    resultBox.style.background = "#d4f8e8";
-    resultBox.style.color = "#06623b";
-    resultBox.innerHTML =
-      "✅ YES — your dataset is multimodal, as you deliberately integrate varied information sources tailored to your task.!<br><small>You are using <strong>" +
-      selectedData.length +
-      "</strong> modalities.</small>";
-  } else {
-    resultBox.style.background = "#ffe0e0";
-    resultBox.style.color = "#8a1f1f";
-    resultBox.textContent = "❌ No — your dataset uses only one modality.";
-  }
+    if (checked.length > 1) {
+        document.getElementById("result").innerText = "✅ Yes! Your dataset is multimodal.";
+    } else {
+        document.getElementById("result").innerText = "❌ No — for this task your dataset uses only one modality.";
+    }
 });
 </script>
+
 
 </body>
 </html>
