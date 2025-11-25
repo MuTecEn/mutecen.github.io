@@ -327,26 +327,6 @@
 <p>Computational music information processing is about turning the physical experience of music into digital data, and then into forms of machine cognition, so that
   computers can help us explore, analyze, and understand music in new ways.</p>
 
-<!-- Thebe Python cell -->
-<div class="cell-block thebe-cell" data-executable="true" data-language="python">
-<pre data-executable="true" data-language="python">
-metadata = {
-"tempo": 95,
-"key": "A minor",
-"instrumentation": ["violin", "laouto", "voice"],
-}
-
-question = "What is the key of the piece?"
-
-if "key" in question.lower():
-    answer = metadata["key"]
-else:
-    answer = "Not sure yet!"
-
-answer
-</pre>
-</div>
-
 <!-- INTERACTIVE MULTIMODALITY TEST -->
 <div class="multimodal-test">
   <p><strong>Is my dataset multimodal?</strong></p>
@@ -734,6 +714,57 @@ function moveNext() {
 
 // Initialize first question
 showQuestion();
+</script>
+
+// MQA Example
+
+<h2>Music Question Answering Example</h2>
+
+<!-- YouTube Video Embed (3:00 to 4:00) -->
+<div class="video-container" style="text-align:center; margin-bottom:20px;">
+  <iframe width="560" height="315" 
+          src="https://www.youtube.com/embed/grRyRRsp08g?start=180&end=240" 
+          title="YouTube video player" frameborder="0" allowfullscreen>
+  </iframe>
+</div>
+
+<!-- Interactive Radial Circle Map -->
+<div class="qa-map" style="display:flex; justify-content:center; flex-wrap:wrap; gap:15px; margin-bottom:20px;">
+  <div class="qa-bubble" data-answer="Electronic">What kind of genre is it?</div>
+  <div class="qa-bubble" data-answer="Left">Where is the piano in relation to the computer?</div>
+  <div class="qa-bubble" data-answer="Zero">How many times did the tempo change?</div>
+  <div class="qa-bubble" data-answer="Yes">Do the performers' visual cues coordinate with the rhythm of the music?</div>
+  <div class="qa-bubble" data-answer="Computer">Which instrument plays first?</div>
+  <div class="qa-bubble" data-answer="Instrument">Why did the performers use a computer?</div>
+  <div class="qa-bubble" data-answer="Aesthetics">What is the purpose of the visuals?</div>
+</div>
+
+<!-- Answer Display -->
+<p id="qa-answer" style="font-weight:bold; text-align:center;"></p>
+
+<!-- Styles -->
+<style>
+  .qa-bubble {
+    background:#00a4c8; color:#fff; border-radius:50%; padding:15px 20px; min-width:140px; text-align:center;
+    cursor:pointer; font-weight:bold; transition: transform 0.2s, background 0.2s;
+  }
+  .qa-bubble:hover {
+    transform: scale(1.1);
+    background:#00789e;
+  }
+</style>
+
+<!-- Script -->
+<script>
+  const bubbles = document.querySelectorAll(".qa-bubble");
+  const answerEl = document.getElementById("qa-answer");
+
+  bubbles.forEach(b => {
+    b.addEventListener("click", () => {
+      const ans = b.getAttribute("data-answer");
+      answerEl.innerText = ans;
+    });
+  });
 </script>
 
 
