@@ -395,26 +395,67 @@ answer
   <p id="result"></p>
 </div>
 
+  <script>
+// --- Complementarity definitions ---
+// A modality is complementary if it contributes NEW information to the task
+// according to your description in the text.
+const complementaryMap = {
+  "Emotion/Affect Recognition": ["audio", "lyrics", "physio", "video", "annotations", "images"],
+  "Genre Classification": ["audio", "lyrics", "images", "video", "annotations"],
+  "Auto-Tagging": ["audio", "lyrics", "images", "annotations"],
+  "Musical Gesture Classification": ["audio", "motion", "video", "annotations", "physio", "midi"],
+  "Singing Voice Analysis": ["audio", "video", "annotations"],
+  "Source Separation": ["audio", "midi", "annotations"],
+  "Piano Tutoring": ["audio", "midi"],
+  "Music Segmentation": ["audio", "midi", "annotations"],
+  "Music Structure Analysis": ["audio", "midi", "annotations"],
+  "Music Transcription": ["audio", "midi", "video", "annotations"],
+  "Instrument Performance Analysis": ["audio", "motion", "midi", "annotations"],
+  "Song Retrieval": ["audio", "lyrics", "annotations"],
+  "Music Exploration & Discovery": ["audio", "lyrics", "images", "annotations"],
+  "Music Generation": ["audio", "video", "lyrics", "images"],
+  "Multi-task MIR": ["audio", "midi", "video", "motion", "lyrics", "physio", "annotations", "images"]
+};
+
 <script>
-document.getElementById("checkButton").addEventListener("click", function() {
+// --- Updated multimodality test logic ---
+document.getElementById("checkButton").addEventListener("click", function () {
   const task = document.getElementById("taskSelect").value;
-  const checked = [...document.querySelectorAll(".modality:checked")];
+  const checked = [...document.querySelectorAll(".modality:checked")].map(x => x.value);
+
+  const resultEl = document.getElementById("result");
 
   if (!task) {
-    document.getElementById("result").innerText = "Please choose a task first.";
+    resultEl.innerText = "Please choose a task first.";
     return;
   }
 
   if (checked.length === 0) {
-    document.getElementById("result").innerText = "Please select at least one type of data.";
+    resultEl.innerText = "Please select at least one type of data.";
     return;
   }
 
-  if (checked.length > 1) {
-    document.getElementById("result").innerText = "✅ YES — your dataset is multimodal, as you deliberately integrate varied information sources tailored to your task!";
+  // List of complementary modalities for this task
+  const complementary = complementaryMap[task] || [];
+
+  // Which of the checked modalities are complementary?
+  const complementarySelected = checked.filter(m => complementary.includes(m));
+
+  // Decide multimodality based on complementarity, not number of modalities
+  if (complementarySelected.length >= 2) {
+    resultEl.innerText =
+      "✅ YES — your dataset is multimodal because the selected modalities provide complementary, task-relevant information.";
+  } else if (complementarySelected.length === 1) {
+    resultEl.innerText =
+      "🟡 Partially multimodal — only one selected modality offers complementary information for this task. Additional complementary modalities may improve performance.";
   } else {
-    document.getElementById("result").innerText = "❌ No — for this task your dataset uses only one modality.";
+    resultEl.innerText =
+      "❌ No — the selected modalities do not provide complementary information for this task. The dataset is not multimodal under the task-based definition.";
   }
+});
+</script>
+
+
 });
 
 // Thebe configuration
