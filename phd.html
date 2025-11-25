@@ -418,7 +418,7 @@ const complementaryMap = {
 };
 
 <script>
-// --- Updated multimodality test logic ---
+// --- Multimodality test logic with detailed messages ---
 document.getElementById("checkButton").addEventListener("click", function () {
   const task = document.getElementById("taskSelect").value;
   const checked = [...document.querySelectorAll(".modality:checked")].map(x => x.value);
@@ -439,17 +439,22 @@ document.getElementById("checkButton").addEventListener("click", function () {
 
   // Which of the checked modalities are complementary?
   const complementarySelected = checked.filter(m => complementary.includes(m));
+  const irrelevantSelected = checked.filter(m => !complementary.includes(m));
 
-  // Decide multimodality strictly based on having more than one complementary modality
   if (complementarySelected.length > 1) {
-    resultEl.innerText =
-      "✅ YES — your dataset is multimodal because multiple selected modalities provide complementary information for this task.";
+    resultEl.innerText = `✅ YES — your dataset is multimodal because multiple selected modalities provide complementary, task-relevant information.`;
+  } else if (complementarySelected.length === 1) {
+    resultEl.innerText = `🟡 Partially multimodal — only one selected modality provides complementary information for this task. Additional complementary modalities are needed.`;
   } else {
-    resultEl.innerText =
-      "❌ No — the dataset is not multimodal under the task-based definition. At least two complementary modalities are required.";
+    if (irrelevantSelected.length > 0) {
+      resultEl.innerText = `❌ No — none of the selected modalities provide complementary information for this task. Irrelevant modalities (${irrelevantSelected.join(", ")}) do not count.`;
+    } else {
+      resultEl.innerText = `❌ No — no modalities selected provide complementary information for this task.`;
+    }
   }
 });
 </script>
+
 
 
   <h2>Multimodality Guide</h2>
