@@ -716,11 +716,9 @@ function moveNext() {
 showQuestion();
 </script>
 
-// MQA Example
-
 <h2>Music Question Answering Example</h2>
 
-<!-- YouTube Video Embed (3:00 to 4:00) -->
+<!-- YouTube Video Embed -->
 <div class="video-container" style="text-align:center; margin-bottom:20px;">
   <iframe width="560" height="315" 
           src="https://www.youtube.com/embed/grRyRRsp08g?start=180&end=240" 
@@ -728,44 +726,48 @@ showQuestion();
   </iframe>
 </div>
 
-<!-- Interactive Radial Circle Map -->
-<div class="qa-map" style="display:flex; justify-content:center; flex-wrap:wrap; gap:15px; margin-bottom:20px;">
-  <div class="qa-bubble" data-answer="Electronic">What kind of genre is it?</div>
-  <div class="qa-bubble" data-answer="Left">Where is the piano in relation to the computer?</div>
-  <div class="qa-bubble" data-answer="Zero">How many times did the tempo change?</div>
-  <div class="qa-bubble" data-answer="Yes">Do the performers' visual cues coordinate with the rhythm of the music?</div>
-  <div class="qa-bubble" data-answer="Computer">Which instrument plays first?</div>
-  <div class="qa-bubble" data-answer="Instrument">Why did the performers use a computer?</div>
-  <div class="qa-bubble" data-answer="Aesthetics">What is the purpose of the visuals?</div>
+<!-- Interactive Question Selector -->
+<div class="qa-selector" style="text-align:center; margin-bottom:15px;">
+  <label for="qaQuestion">Select a question:</label><br>
+  <select id="qaQuestion" style="padding:8px 12px; font-size:1rem; margin-top:8px;">
+    <option value="">-- Choose a question --</option>
+    <option value="Electronic">What kind of genre is it?</option>
+    <option value="Left">Where is the piano in relation to the computer?</option>
+    <option value="Zero">How many times did the tempo change?</option>
+    <option value="Yes">Do the performers' visual cues coordinate with the rhythm of the music?</option>
+    <option value="Computer">Which instrument plays first?</option>
+    <option value="Instrument">Why did the performers use a computer?</option>
+    <option value="Aesthetics">What is the purpose of the visuals?</option>
+  </select>
+  <br>
+  <button id="getAnswerBtn" style="margin-top:10px; padding:8px 15px; background:#00a4c8; color:#fff; border:none; border-radius:5px; cursor:pointer;">Get Answer</button>
 </div>
 
-<!-- Answer Display -->
-<p id="qa-answer" style="font-weight:bold; text-align:center;"></p>
+<!-- Loading / Answer Display -->
+<p id="qaAnswer" style="font-weight:bold; text-align:center; font-size:1.1rem;"></p>
 
-<!-- Styles -->
-<style>
-  .qa-bubble {
-    background:#00a4c8; color:#fff; border-radius:50%; padding:15px 20px; min-width:140px; text-align:center;
-    cursor:pointer; font-weight:bold; transition: transform 0.2s, background 0.2s;
-  }
-  .qa-bubble:hover {
-    transform: scale(1.1);
-    background:#00789e;
-  }
-</style>
-
-<!-- Script -->
 <script>
-  const bubbles = document.querySelectorAll(".qa-bubble");
-  const answerEl = document.getElementById("qa-answer");
+  const qaSelect = document.getElementById("qaQuestion");
+  const getAnswerBtn = document.getElementById("getAnswerBtn");
+  const qaAnswerEl = document.getElementById("qaAnswer");
 
-  bubbles.forEach(b => {
-    b.addEventListener("click", () => {
-      const ans = b.getAttribute("data-answer");
-      answerEl.innerText = ans;
-    });
+  getAnswerBtn.addEventListener("click", () => {
+    const answer = qaSelect.value;
+    if (!answer) {
+      qaAnswerEl.innerText = "Please select a question first.";
+      return;
+    }
+
+    // Show loading/fusing message
+    qaAnswerEl.innerText = "🔄 Fusing audio, video, and text to give the correct answer...";
+    
+    // Simulate processing delay (3 seconds)
+    setTimeout(() => {
+      qaAnswerEl.innerText = `💡 Answer: ${answer}`;
+    }, 3000);
   });
 </script>
+
 
 
 
