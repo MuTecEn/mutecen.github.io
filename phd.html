@@ -417,11 +417,11 @@ const complementaryMap = {
   "Multi-task MIR": ["audio", "midi", "video", "motion", "lyrics", "physio", "annotations", "images"]
 };
 
+<script>
 // --- Updated multimodality test logic ---
 document.getElementById("checkButton").addEventListener("click", function () {
   const task = document.getElementById("taskSelect").value;
   const checked = [...document.querySelectorAll(".modality:checked")].map(x => x.value);
-
   const resultEl = document.getElementById("result");
 
   if (!task) {
@@ -440,19 +440,17 @@ document.getElementById("checkButton").addEventListener("click", function () {
   // Which of the checked modalities are complementary?
   const complementarySelected = checked.filter(m => complementary.includes(m));
 
-  // Decide multimodality based on complementarity, not number of modalities
-  if (complementarySelected.length >= 2) {
+  // Decide multimodality strictly based on having more than one complementary modality
+  if (complementarySelected.length > 1) {
     resultEl.innerText =
-      "✅ YES — your dataset is multimodal because the selected modalities provide complementary, task-relevant information.";
-  } else if (complementarySelected.length === 1) {
-    resultEl.innerText =
-      "🟡 Partially multimodal — only one selected modality offers complementary information for this task. Additional complementary modalities may improve performance.";
+      "✅ YES — your dataset is multimodal because multiple selected modalities provide complementary information for this task.";
   } else {
     resultEl.innerText =
-      "❌ No — the selected modalities do not provide complementary information for this task. The dataset is not multimodal under the task-based definition.";
+      "❌ No — the dataset is not multimodal under the task-based definition. At least two complementary modalities are required.";
   }
 });
 </script>
+
 
   <h2>Multimodality Guide</h2>
 <p>This interactive tool helps you explore which music processing tasks you can perform with your dataset, or which data you need for a target task.</p>
